@@ -111,6 +111,7 @@ class Heap<Element : Comparable> {
         buildheap()
     }
     
+    @discardableResult
     func getRoot() -> Element? {
         if !list.isEmpty {
             return list[0]
@@ -118,6 +119,7 @@ class Heap<Element : Comparable> {
         return nil
     }
     
+    @discardableResult
     func extract() -> Element? {
         
         if let element = getRoot() {
@@ -155,4 +157,7 @@ class Heap<Element : Comparable> {
         return list.isEmpty
     }
     
+    var size: Int {
+        return list.count
+    }
 }

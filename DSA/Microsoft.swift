@@ -1473,6 +1473,37 @@ extension Problems {
         let y = getReverseNumber(x)
         return y == x
     }
+    
+    func closestValue(_ root: TreeNode?, _ target: Double) -> Int {
+        var closest = root?.value ?? -1
+        var rootVal = root
+        while rootVal != nil {
+            if let val = rootVal?.value {
+                closest = abs(Double(val) - target) < abs(Double(closest) - target) ? val : closest
+                rootVal = target < Double(val) ? rootVal?.left : rootVal?.right
+            }
+        }
+        return closest
+    }
+    
+    func lowestCommonAncestorHelper(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
+        let x = root?.value ?? -1
+        let y = p?.value ?? -1
+        let z = q?.value ?? -1
+        if x > y && x > z {
+            return lowestCommonAncestor(root?.left, p, q)
+        }
+        else if x < y && x < z {
+            return lowestCommonAncestor(root?.right, p, q)
+        }
+        else {
+            return root
+        }
+    }
+    
+    func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
+        return lowestCommonAncestorHelper(root, p, q)
+    }
 }
 
 class ArrayReader {
@@ -1636,3 +1667,58 @@ class MyStack {
         return queue2.isEmpty
     }
 }
+
+
+class KthLargest {
+
+    private let heap: Heap<Int>
+    let kVal: Int
+    init(_ k: Int, _ nums: [Int]) {
+        heap = Heap<Int>(type: .minHeap)
+        kVal = k
+        for item in nums {
+            add(item)
+        }
+    }
+    
+    @discardableResult
+    func add(_ val: Int) -> Int {
+        if heap.size < kVal {
+            heap.insert(element: val)
+        }
+        else if let x = heap.getRoot(), x < val {
+            heap.extract()
+            heap.insert(element: val)
+        }
+        return heap.getRoot() ?? -1
+    }
+}
+
+class MyQueue {
+
+    /** Initialize your data structure here. */
+    init() {
+        
+    }
+    
+    /** Push element x to the back of queue. */
+    func push(_ x: Int) {
+        
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    func pop() -> Int {
+        return -1
+    }
+    
+    /** Get the front element. */
+    func peek() -> Int {
+        return -1
+    }
+    
+    /** Returns whether the queue is empty. */
+    func empty() -> Bool {
+        return false
+    }
+}
+
