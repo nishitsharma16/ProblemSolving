@@ -1504,6 +1504,27 @@ extension Problems {
     func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
         return lowestCommonAncestorHelper(root, p, q)
     }
+    
+    func getNext(_ n: Int) -> Int {
+        var result = 0
+        var nVal = n
+        while nVal > 0 {
+            let x = nVal % 10
+            nVal /= 10
+            result += x * x
+        }
+        return result
+    }
+    
+    func isHappy(_ n: Int) -> Bool {
+        var set = Set<Int>()
+        var nVal = n
+        while nVal != 1 && !set.contains(nVal) {
+            set.insert(nVal)
+            nVal = getNext(nVal)
+        }
+        return nVal == 1
+    }
 }
 
 class ArrayReader {
@@ -1696,6 +1717,8 @@ class KthLargest {
 
 class MyQueue {
 
+    private let stack1 = Stack<Int>()
+    private let stack2 = Stack<Int>()
     /** Initialize your data structure here. */
     init() {
         
@@ -1703,22 +1726,36 @@ class MyQueue {
     
     /** Push element x to the back of queue. */
     func push(_ x: Int) {
-        
+        stack1.push(val: x)
     }
     
     /** Removes the element from in front of queue and returns that element. */
     func pop() -> Int {
-        return -1
+        while !stack1.isEmpty {
+            stack2.push(val: stack1.pop())
+        }
+        let val = stack2.pop()
+        while !stack2.isEmpty {
+            stack1.push(val: stack2.pop())
+        }
+        return val
     }
     
     /** Get the front element. */
     func peek() -> Int {
-        return -1
+        while !stack1.isEmpty {
+            stack2.push(val: stack1.pop())
+        }
+        let val = stack2.top()
+        while !stack2.isEmpty {
+            stack1.push(val: stack2.pop())
+        }
+        return val ?? -1
     }
     
     /** Returns whether the queue is empty. */
     func empty() -> Bool {
-        return false
+        return stack1.isEmpty
     }
 }
 
