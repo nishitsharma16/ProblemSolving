@@ -526,8 +526,8 @@
             filePath = "DSA/Microsoft.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1624"
-            endingLineNumber = "1624"
+            startingLineNumber = "1726"
+            endingLineNumber = "1726"
             landmarkName = "next(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1537,6 +1537,22 @@
             startingLineNumber = "1433"
             endingLineNumber = "1433"
             landmarkName = "isSubsequence(_:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "88D06711-7090-4E9E-B8D8-443B8480A302"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DSA/Microsoft.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1560"
+            endingLineNumber = "1560"
+            landmarkName = "getRowInPascleTringle(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

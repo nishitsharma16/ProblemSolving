@@ -1525,6 +1525,108 @@ extension Problems {
         }
         return nVal == 1
     }
+    
+    static func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        if nums1.isEmpty || nums2.isEmpty {
+            return []
+        }
+        
+        if nums1.count > nums2.count {
+            return intersect(nums2, nums1)
+        }
+        
+        var map = [Int : Int]()
+        for item in nums1 {
+            if let x = map[item] {
+                map[item] = x + 1
+            }
+            else {
+                map[item] = 1
+            }
+        }
+        var result = [Int]()
+        
+        for item in nums2 {
+            if let x = map[item], x > 0 {
+                result.append(item)
+                map[item] = x - 1
+            }
+        }
+        
+        return result
+    }
+    
+    static func getRowInPascleTringle(_ rowIndex: Int) -> [Int] {
+        var list = Array<Array<Int>>()
+        for i in 0...rowIndex {
+            let count = i + 1
+            var x = Array<Int>(repeating: 0, count: count)
+            x[0] = 1
+            x [count - 1] = 1
+            if i > 1 {
+                let y = list[i - 1]
+                for j in 1..<count - 1 {
+                    x[j] = y[j - 1] + y[j]
+                }
+            }
+            list.append(x)
+        }
+        return list[rowIndex]
+    }
+    
+    // Number of 1 bits
+    func hammingWeight(_ n: Int) -> Int {
+        if n == 0 {
+            return 0
+        }
+        var counter = 0
+        var one = 1
+        for _ in 0..<32 {
+            let x = n & (one)
+            if x != 0 {
+                counter += 1
+            }
+            one = one << 1
+        }
+        return counter
+    }
+    
+    func firstUniqChar(_ s: String) -> Int {
+        
+        if s.isEmpty {
+            return 0
+        }
+        
+        var map = [Character: Int]()
+        let sVal = Array(s)
+        
+        for item in sVal {
+            if let x = map[item] {
+                map[item] = x + 1
+            }
+            else {
+                map[item] = 1
+            }
+        }
+        
+        for i in 0..<sVal.count {
+            let item = sVal[i]
+            if let x = map[item], x == 1 {
+                return i
+            }
+        }
+        
+        return -1
+    }
+    
+    func missingNumber(_ nums: [Int]) -> Int {
+        let n = nums.count
+        let sum = n * (n + 1)/2
+        let x = nums.reduce(0) { (prev, curr) -> Int in
+            prev + curr
+        }
+        return sum - x
+    }
 }
 
 class ArrayReader {
