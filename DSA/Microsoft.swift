@@ -1627,6 +1627,34 @@ extension Problems {
         }
         return sum - x
     }
+    
+    func binaryTreePathsHelper(_ root: TreeNode?, _ str: String, _ result: inout [String]) {
+        if let rVal = root?.value {
+            var val = str + "\(rVal)"
+            if root?.left == nil && root?.right == nil {
+                result.append(val)
+                return
+            }
+            else {
+                val += "->"
+            }
+            binaryTreePathsHelper(root?.left, val, &result)
+            binaryTreePathsHelper(root?.right, val, &result)
+        }
+    }
+    
+    func binaryTreePaths(_ root: TreeNode?) -> [String] {
+        if root == nil {
+            return []
+        }
+        var result = [String]()
+        binaryTreePathsHelper(root, "", &result)
+        return result
+    }
+    
+    func isCousins(_ root: TreeNode?, _ x: Int, _ y: Int) -> Bool {
+        return false
+    }
 }
 
 class ArrayReader {
