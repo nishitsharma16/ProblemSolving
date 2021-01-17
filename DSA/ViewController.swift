@@ -125,9 +125,9 @@ class ViewController: UIViewController {
         
         "7.5.2.4"
         "7.5.3"
-        var list = [1,2,3,0,0,0]
+        var list = [0,1,0,3,12]
         
-        Problems.getRowInPascleTringle(0)
+        Problems.moveZeroes(&list)
 
     }
     

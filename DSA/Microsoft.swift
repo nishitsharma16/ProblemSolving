@@ -1453,7 +1453,7 @@ extension Problems {
             }
         }
         
-        return tList[0..<sList.count] == sList[0...]
+        return tList.prefix(sList.count) == sList[0...]
     }
     
     func getReverseNumber(_ n: Int) -> Int {
@@ -1652,8 +1652,250 @@ extension Problems {
         return result
     }
     
+    // Not working
+    func depthAndParentForNode(_ root: TreeNode?, _ parent: TreeNode?, _ val: Int) -> (h: Int, r: TreeNode?) {
+        if root == nil {
+            return (0, root)
+        }
+        else if let x = root?.value, val == x {
+            return (0, parent ?? root)
+        }
+        let lHeight = depthAndParentForNode(root?.left, root, val)
+        let rHeight = depthAndParentForNode(root?.right, root, val)
+        return (max(lHeight.h, rHeight.h) + 1, lHeight.r ?? rHeight.r)
+    }
+    
     func isCousins(_ root: TreeNode?, _ x: Int, _ y: Int) -> Bool {
+        let xVal = depthAndParentForNode(root, nil, x)
+        let yVal = depthAndParentForNode(root, nil, y)
+        return xVal.h == yVal.h && xVal.r !== yVal.r
+    }
+    
+    static func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
+        if ransomNote.isEmpty {
+            return true
+        }
+        
+        let sList = Array(ransomNote)
+        let tList = Array(magazine)
+        if sList.count > tList.count {
+            return false
+        }
+        
+        var map = [Character: Int]()
+        for item in tList {
+            if let x = map[item] {
+                map[item] = x + 1
+            }
+            else {
+                map[item] = 1
+            }
+        }
+        var i = 0
+        while i < sList.count {
+            if let val = map[sList[i]], val > 0 {
+                map[sList[i]] = val - 1
+            }
+            else {
+                return false
+            }
+            i += 1
+        }
+        
+        return true
+    }
+    
+    static func canConstructV2(_ ransomNote: String, _ magazine: String) -> Bool {
+        if ransomNote.isEmpty {
+            return true
+        }
+        
+        let sList = Set(ransomNote)
+        let tList = Set(magazine)
+        if sList.count > tList.count {
+            return false
+        }
+        return sList.isSubset(of: tList)
+    }
+    
+    func generatePascleTringle(_ numRows: Int) -> [[Int]] {
+        var list = Array<Array<Int>>()
+        for i in 0..<numRows {
+            let count = i + 1
+            var x = Array<Int>(repeating: 0, count: count)
+            x[0] = 1
+            x [count - 1] = 1
+            if i > 1 {
+                let y = list[i - 1]
+                for j in 1..<count - 1 {
+                    x[j] = y[j - 1] + y[j]
+                }
+            }
+            list.append(x)
+        }
+        return list
+    }
+    
+    func levelOrderBottomHelper(_ root: TreeNode?, _ level: Int, _ map: inout [Int: [Int]]) {
+        if let r = root {
+            if var val = map[level] {
+                val.append(r.value)
+                map[level] = val
+            }
+            else {
+                map[level] = [r.value]
+            }
+            levelOrderBottomHelper(root?.left, level + 1, &map)
+            levelOrderBottomHelper(root?.right, level + 1, &map)
+        }
+    }
+    
+    func levelOrderBottom(_ root: TreeNode?) -> [[Int]] {
+        if root == nil {
+            return []
+        }
+        var map = [Int: [Int]]()
+        levelOrderBottomHelper(root, 0, &map)
+        let x = map.sorted { (first, second) -> Bool in
+            first.key > second.key
+        }.map { $0.value }
+        return x
+    }
+    
+    func tree2strHelper(_ t: TreeNode?) -> String {
+        if t == nil {
+            return ""
+        }
+        let x = tree2str(t?.left)
+        let y = tree2str(t?.right)
+        var z = ""
+        if let val = t?.value {
+            z += "\(val)"
+        }
+        if !x.isEmpty && !y.isEmpty {
+            z += "(\(x))" + "(\(y))"
+        }
+        else if !x.isEmpty {
+            z += "(\(x))"
+        }
+        else if !y.isEmpty {
+            z += "()" + "(\(y))"
+        }
+        return z
+    }
+    
+    func tree2str(_ t: TreeNode?) -> String {
+        if t == nil {
+            return ""
+        }
+        let x = tree2strHelper(t)
+        return x
+    }
+    
+    func countOdds(_ low: Int, _ high: Int) -> Int {
+        if low > high {
+            return 0
+        }
+        else if low == high {
+            if low % 2 == 0 {
+                return 0
+            }
+            else {
+                return 1
+            }
+        }
+        else if low % 2 != 0 && high % 2 != 0 {
+            let x = high - low - 1
+            return x / 2 + 2
+        }
+        else if low % 2 == 0 && high % 2 == 0 {
+            let x = high - low - 1
+            return x - x / 2
+        }
+        else {
+            let x = high - low - 1
+            return x / 2 + 1
+        }
+    }
+    
+    func containsDuplicate(_ nums: [Int]) -> Bool {
+        if nums.isEmpty {
+            return false
+        }
+        var set = Set<Int>()
+        for item in nums {
+            if set.contains(item) {
+                return true
+            }
+            else {
+                set.insert(item)
+            }
+        }
         return false
+    }
+    
+    func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
+        if numbers.isEmpty {
+            return []
+        }
+        var l = 0
+        var r = numbers.count - 1
+        while l < r {
+            if numbers[l] + numbers[r] == target {
+                return [l + 1, r + 1]
+            }
+            else if numbers[l] + numbers[r] < target {
+                l += 1
+            }
+            else {
+                r -= 1
+            }
+        }
+        return []
+    }
+    
+    static func moveZeroes(_ nums: inout [Int]) {
+        if nums.isEmpty {
+            return
+        }
+        let len = nums.count
+        var i = 0
+        var zeros = nums.filter { $0 == 0 }.count
+        if zeros == nums.count {
+            return
+        }
+        while i < len {
+            if zeros == 0 {
+                return
+            }
+            if nums[i] == 0 {
+                for j in i..<len - 1 {
+                    nums[j] = nums[j + 1]
+                }
+                nums[len - 1] = 0
+                zeros -= 1
+            }
+            else {
+                i += 1
+            }
+        }
+    }
+    
+    static func moveZeroesV2(_ nums: inout [Int]) {
+        if nums.isEmpty {
+            return
+        }
+        let len = nums.count
+        var lastNonZeroFoundAt = 0
+        for i in 0..<len {
+            if nums[i] != 0 {
+                nums[lastNonZeroFoundAt] = nums[i]
+                lastNonZeroFoundAt += 1
+            }
+        }
+        for i in lastNonZeroFoundAt..<len {
+            nums[i] = 0
+        }
     }
 }
 
