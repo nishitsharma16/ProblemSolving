@@ -127,8 +127,30 @@ class ViewController: UIViewController {
         "7.5.3"
         var list = [0,1,0,3,12]
         
-        Problems.moveZeroes(&list)
+        Problems.romanToInt("III")
+        
+//        queueDispatch()
 
+    }
+    
+    func queueDispatch() {
+        print("A")
+        DispatchQueue.main.async {
+            print("B")
+            DispatchQueue.main.async {
+                print("C")
+                DispatchQueue.main.async {
+                    print("D")
+                }
+            }
+            DispatchQueue.global().sync {
+                print("E")
+                DispatchQueue.main.sync {
+                    print("F")
+                }
+            }
+            print("H")
+        }
     }
     
     func test2(_ logLines : [String]) -> [String] {
@@ -422,6 +444,7 @@ extension Test2WordItem : Comparable {
 class MyClass {
     
 }
+
 
 //infix operator ====
 //

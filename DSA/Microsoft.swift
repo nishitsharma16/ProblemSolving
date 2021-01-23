@@ -1897,6 +1897,154 @@ extension Problems {
             nums[i] = 0
         }
     }
+    
+    func findKthPositiveMissingNumber(_ arr: [Int], _ k: Int) -> Int {
+        if arr.isEmpty {
+            return k
+        }
+        let last = arr[arr.count - 1]
+        var j = 0
+        var kVal = k
+        var missing = 0
+        for i in 1...last {
+            if kVal == 0 {
+                break
+            }
+            if i != arr[j] {
+                kVal -= 1
+                missing = i
+            }
+            else {
+                j += 1
+            }
+        }
+        if kVal > 0 {
+            missing = last + kVal
+        }
+        return missing
+    }
+    
+    func mergeTwoSortedLists(_ l1: SortedNode?, _ l2: SortedNode?) -> SortedNode? {
+        let dummy = SortedNode(-1)
+        var curr1 = l1
+        var curr2 = l2
+        var temp: SortedNode? = dummy
+        
+        while curr1 != nil && curr2 != nil {
+            if let val1 = curr1?.val, let val2 = curr2?.val, val1 < val2 {
+                temp?.next = curr1
+                curr1 = curr1?.next
+                temp = temp?.next
+            }
+            else {
+                temp?.next = curr2
+                curr2 = curr2?.next
+                temp = temp?.next
+            }
+        }
+        
+        temp?.next = curr1 != nil ? curr1 : curr2
+        return dummy.next
+    }
+    
+    func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
+        if nums.isEmpty {
+            return []
+        }
+        let set = Set<Int>(nums)
+        let n = nums.count
+        var result = [Int]()
+        for i in 1...n {
+            if !set.contains(i) {
+                result.append(i)
+            }
+        }
+        return result
+    }
+    
+    
+    func findTarget(_ root: TreeNode?, _ k: Int) -> Bool {
+        if root == nil {
+            return false
+        }
+        var list = [Int]()
+        inOrder(root, &list)
+        var l = 0
+        var r = list.count - 1
+        while l < r {
+            if list[l] + list[r] == k {
+                return true
+            }
+            else if list[l] + list[r] < k {
+                l += 1
+            }
+            else {
+                r -= 1
+            }
+        }
+        return false
+    }
+    
+    static func romanToInt(_ s: String) -> Int {
+        var result = 0
+        let target = Array(s)
+        let map = ["M" : 1000, "CM" : 900, "D" : 500, "CD" : 400, "C" : 100, "XC" : 90, "L" : 50, "XL" : 40, "X" : 10, "IX" : 9, "V" : 5, "IV" : 4, "I" : 1]
+        var j = 0
+        while j < target.count {
+            if j + 1 < target.count {
+                let x = String(target[j...j+1])
+                if let y = map[x] {
+                    result += y
+                    j += 2
+                }
+                else {
+                    if let x = map[String(target[j])] {
+                        result += x
+                        j += 1
+                    }
+                }
+            }
+            else {
+                if let x = map[String(target[j])] {
+                    result += x
+                    j += 1
+                }
+            }
+        }
+        return result
+    }
+    
+    func isAnagram(_ s: String, _ t: String) -> Bool {
+        let sVal = Array(s)
+        let tVal = Array(t)
+        if sVal.count != tVal.count {
+            return false
+        }
+        var map = [Character: Int]()
+        for item in sVal {
+            if let x = map[item] {
+                map[item] = x + 1
+            }
+            else {
+                map[item] = 1
+            }
+        }
+        for item in tVal {
+            if let x = map[item] {
+                map[item] = x - 1
+            }
+        }
+        for item in map {
+            if item.value != 0 {
+                return false
+            }
+        }
+        return true
+    }
+    
+    func addDigits(_ num: Int) -> Int {
+        return 0
+    }
 }
 
 class ArrayReader {
