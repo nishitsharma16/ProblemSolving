@@ -1895,6 +1895,13 @@ extension Character {
         return false
     }
     
+    var isEnglishLetter: Bool {
+        if let val = self.asciiValue, val >= 97 && val <= 122 || val >= 65 && val <= 92 {
+            return true
+        }
+        return false
+    }
+    
 }
 
 extension Int {

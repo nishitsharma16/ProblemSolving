@@ -1556,6 +1556,38 @@ extension Problems {
         return result
     }
     
+    static func intersectWithoutDuplicates(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        if nums1.isEmpty || nums2.isEmpty {
+            return []
+        }
+        
+        if nums1.count > nums2.count {
+            return intersect(nums2, nums1)
+        }
+        
+        var map = [Int : Int]()
+        for item in nums1 {
+            if let x = map[item] {
+                map[item] = x + 1
+            }
+            else {
+                map[item] = 1
+            }
+        }
+        var result = [Int]()
+        
+        for item in nums2 {
+            if let x = map[item], x > 0 {
+                if !result.contains(item) {
+                    result.append(item)
+                }
+                map[item] = x - 1
+            }
+        }
+        
+        return result
+    }
+    
     static func getRowInPascleTringle(_ rowIndex: Int) -> [Int] {
         var list = Array<Array<Int>>()
         for i in 0...rowIndex {
@@ -2042,8 +2074,230 @@ extension Problems {
         return true
     }
     
+    func digitSum(_ n: Int) -> Int {
+        var nVal = n
+        var sum = 0
+        while nVal > 0 {
+            sum += nVal % 10
+            nVal /= 10
+        }
+        return sum
+    }
+    
     func addDigits(_ num: Int) -> Int {
-        return 0
+        if num < 10 {
+            return num
+        }
+        var n = num
+        while n >= 10 {
+            n = digitSum(n)
+        }
+        return n
+    }
+    
+    static func reverseOnlyLetters(_ S: String) -> String {
+        var sVal = Array(S)
+        if sVal.isEmpty {
+            return ""
+        }
+        var l = 0
+        var r = sVal.count - 1
+        let x = "abcdefghijklmnopqrstuvwxyz" + "abcdefghijklmnopqrstuvwxyz".uppercased()
+        let set = Set<Character>(x)
+        
+        while l < r {
+            if set.contains(sVal[l]) && set.contains(sVal[r]) {
+                sVal.swapAt(l, r)
+                l += 1
+                r -= 1
+            }
+            else if set.contains(sVal[r]) {
+                l += 1
+            }
+            else {
+                r -= 1
+            }
+        }
+        return String(sVal)
+    }
+    
+    func majorityElement(_ nums: [Int]) -> Int {
+        var map = [Int: Int]()
+        for item in nums {
+            if let x = map[item] {
+                map[item] = x + 1
+            }
+            else {
+                map[item] = 1
+            }
+        }
+        
+        let len = nums.count
+        var result = 0
+        var max = Int.min
+        for x in map {
+            if x.value > len / 2 && x.value > max {
+                max = x.value
+                result = x.key
+            }
+        }
+        return result
+    }
+    func sortedArrayToBSTHelper(_ nums: [Int], _ l: Int, _ r: Int, _ index: inout Int) -> TreeNode? {
+        if l > r {
+            return nil
+        }
+        let mid = (l + r) / 2
+        let left = sortedArrayToBSTHelper(nums, l, mid - 1, &index)
+        let root = TreeNode(val: nums[index])
+        root.left = left
+        index += 1
+        root.right = sortedArrayToBSTHelper(nums, mid + 1, r, &index)
+        return root
+    }
+    
+    func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
+        if nums.isEmpty {
+            return nil
+        }
+        var index = 0
+        return sortedArrayToBSTHelper(nums, 0, nums.count - 1, &index)
+    }
+    
+    func shortestDistance(_ words: [String], _ word1: String, _ word2: String) -> Int {
+        if words.isEmpty {
+            return -1
+        }
+        var map = [String: [Int]]()
+        for i in 0..<words.count {
+            let item = words[i]
+            if var val = map[item] {
+                val.append(i)
+                map[item] = val
+            }
+            else {
+                map[item] = [i]
+            }
+        }
+        var min = Int.max
+        if let x = map[word1], let y = map[word2] {
+            for i in x {
+                for j in y {
+                    if min > abs(i - j) {
+                        min = abs(i - j)
+                    }
+                }
+            }
+            return min != Int.max ? min : -1
+        }
+        return -1
+    }
+    
+    func shortestDistance3(_ words: [String], _ word1: String, _ word2: String) -> Int {
+        if words.isEmpty {
+            return -1
+        }
+        var map = [String: [Int]]()
+        for i in 0..<words.count {
+            let item = words[i]
+            if var val = map[item] {
+                val.append(i)
+                map[item] = val
+            }
+            else {
+                map[item] = [i]
+            }
+        }
+        var min = Int.max
+        if let x = map[word1], let y = map[word2] {
+            if x == y {
+                let count = x.count
+                if count > 1 {
+                    return x[count - 1] - x[count - 2]
+                }
+                else {
+                    return -1
+                }
+            }
+            for i in x {
+                for j in y {
+                    if min > abs(i - j) {
+                        min = abs(i - j)
+                    }
+                }
+            }
+            return min != Int.max ? min : -1
+        }
+        return -1
+    }
+    
+    func shortestDistanceV2(_ words: [String], _ word1: String, _ word2: String) -> Int {
+        if words.isEmpty {
+            return -1
+        }
+        var x = -1
+        var y = -1
+        var min = Int.max
+        for i in 0..<words.count {
+            if words[i] == word1 {
+                x = i
+            }
+            else if words[i] == word2 {
+                y = i
+            }
+            if x != -1 && y != -1 && min > abs(x - y) {
+                min = abs(x - y)
+            }
+        }
+        return min != Int.max ? min : -1
+    }
+    
+    static func dayOfTheWeek(_ day: Int, _ month: Int, _ year: Int) -> String {
+        let days = ["Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"]
+        var months = [31,28,31,30,31,30,31,31,30,31,30,31]
+        var counter = 0
+        if year % 100 == 0 {
+            if year % 400 == 0 {
+                months[1] = 29
+            }
+        }
+        else if year % 4 == 0 {
+            months[1] = 29
+        }
+        for i in 1972...year {
+            if (i - 1) % 4 == 0 {
+                counter += 2
+            }
+            else {
+                counter += 1
+            }
+        }
+        for i in 0..<month - 1 {
+            counter += months[i]
+        }
+        counter += day - 1
+        return days[counter % 7]
+    }
+    
+    static func peakIndexInMountainArrayHelper(_ arr: [Int], _ l: Int, _ r: Int) -> Int {
+        if l > r {
+            return -1
+        }
+        let mid = (l + r) / 2
+        if mid - 1 >= 0 && mid + 1 <= r && arr[mid - 1] < arr[mid] && arr[mid] > arr[mid + 1] {
+            return mid
+        }
+        else if mid - 1 >= 0 && mid + 1 <= r && arr[mid - 1] < arr[mid] && arr[mid] < arr[mid + 1] {
+            return peakIndexInMountainArrayHelper(arr, mid + 1, r)
+        }
+        return peakIndexInMountainArrayHelper(arr, l, mid - 1)
+    }
+    
+    static func peakIndexInMountainArray(_ arr: [Int]) -> Int {
+        if arr.isEmpty {
+            return -1
+        }
+        return peakIndexInMountainArrayHelper(arr, 0, arr.count - 1)
     }
 }
 
