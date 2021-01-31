@@ -2279,25 +2279,159 @@ extension Problems {
         return days[counter % 7]
     }
     
-    static func peakIndexInMountainArrayHelper(_ arr: [Int], _ l: Int, _ r: Int) -> Int {
-        if l > r {
-            return -1
-        }
-        let mid = (l + r) / 2
-        if mid - 1 >= 0 && mid + 1 <= r && arr[mid - 1] < arr[mid] && arr[mid] > arr[mid + 1] {
-            return mid
-        }
-        else if mid - 1 >= 0 && mid + 1 <= r && arr[mid - 1] < arr[mid] && arr[mid] < arr[mid + 1] {
-            return peakIndexInMountainArrayHelper(arr, mid + 1, r)
-        }
-        return peakIndexInMountainArrayHelper(arr, l, mid - 1)
-    }
-    
     static func peakIndexInMountainArray(_ arr: [Int]) -> Int {
         if arr.isEmpty {
             return -1
         }
-        return peakIndexInMountainArrayHelper(arr, 0, arr.count - 1)
+        
+        let length = arr.count
+        
+        if length == 1 {
+            return 0
+        }
+        else if length == 2 {
+            return arr[0] > arr [1] ? 0 : 1
+        }
+        
+        for index in 1..<length - 1 {
+            if arr[index] > arr[index - 1] && arr[index] > arr[index + 1] {
+                return index
+            }
+        }
+        return arr[0] > arr[length - 1] ? 0 : length - 1
+    }
+    
+    func fib(_ n: Int) -> Int {
+        var list = Array(repeating: 0, count: n + 1)
+        list[0] = 0
+        if n == 0 {
+            return list[n]
+        }
+        list[1] = 1
+        if n == 1 {
+            return list[n]
+        }
+        
+        for i in 2...n {
+            list[i] = list[i - 1] + list[i - 2]
+        }
+        return list[n]
+    }
+    
+    func islandPerimeter(_ grid: [[Int]]) -> Int {
+        if grid.isEmpty {
+            return 0
+        }
+        let m = grid.count
+        let n = grid[0].count
+        
+        var result = 0
+        for i in 0..<m {
+            for j in 0..<n {
+                if grid[i][j] == 1 {
+                    result += 4
+                    if i > 0 && grid[i - 1][j] == 1 {
+                        result -= 2
+                    }
+                    if j > 0 && grid[i][j - 1] == 1 {
+                        result -= 2
+                    }
+                }
+            }
+        }
+        return result
+    }
+    
+    static func sortedSquares(_ nums: [Int]) -> [Int] {
+        if nums.isEmpty {
+            return []
+        }
+        
+        let len = nums.count
+        var result = Array(repeating: 0, count: len)
+        var l = 0
+        var r = len - 1
+        var i = len - 1
+        
+        while i >= 0 {
+            var x: Int = 0
+            if abs(nums[l]) < abs(nums[r]) {
+                x = nums[r]
+                r -= 1
+            }
+            else {
+                x = nums[l]
+                l += 1
+            }
+            result[i] = x * x
+            i -= 1
+        }
+        return result
+    }
+    
+    func minimumAbsDifference(_ arr: [Int]) -> [[Int]] {
+        if arr.isEmpty {
+            return []
+        }
+        let list = arr.sorted()
+        var map = [Int : [[Int]]]()
+        for i in 0..<arr.count - 1 {
+            let diff = list[i + 1] - list[i]
+            if var val = map[diff] {
+                val.append([list[i], list[i + 1]])
+                map[diff] = val
+            }
+            else {
+                map[diff] = [[list[i], list[i + 1]]]
+            }
+        }
+        if let min = map.keys.min(), let x = map[min] {
+            return x
+        }
+        return []
+    }
+    
+    static func minimumAbsDifferenceV2(_ arr: [Int]) -> [[Int]] {
+        if arr.isEmpty {
+            return []
+        }
+        let list = arr.sorted()
+        var result = [[Int]]()
+        var min = Int.max
+        for i in 0..<arr.count - 1 {
+            let diff = list[i + 1] - list[i]
+            if min > diff {
+                min = diff
+                result.removeAll()
+                result.append([list[i], list[i + 1]])
+            }
+            else if min == diff {
+                result.append([list[i], list[i + 1]])
+            }
+        }
+        return result
+    }
+    
+    static func shortestToChar(_ S: String, _ C: Character) -> [Int] {
+        if S.isEmpty {
+            return []
+        }
+        let sVal = Array(S)
+        var list = [Int]()
+        for i in 0..<sVal.count {
+            if sVal[i] == C {
+                list.append(i)
+            }
+        }
+        var result = [Int]()
+        var j = 0
+        for i in 0..<sVal.count {
+            if j < list.count - 1 && abs(list[j + 1] - i) < abs(list[j] - i) {
+                j += 1
+            }
+            result.append(abs(list[j] - i))
+        }
+        return result
     }
 }
 
