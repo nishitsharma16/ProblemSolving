@@ -127,7 +127,7 @@ class ViewController: UIViewController {
         "7.5.3"
         var list = [0,1,0,3,12]
         
-        Problems.shortestToChar("loveleetcod", "e")
+        Problems.removeDuplicatesChars("abbaca")
         
 //        queueDispatch()
 

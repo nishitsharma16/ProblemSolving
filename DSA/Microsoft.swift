@@ -2433,6 +2433,125 @@ extension Problems {
         }
         return result
     }
+    
+    func commonChars(_ A: [String]) -> [String] {
+        if A.isEmpty {
+            return []
+        }
+        var set = Set<Character>(A[0])
+        for i in 1..<A.count {
+            set = set.intersection(Set<Character>(A[i]))
+        }
+        let list = Array(A[0])
+        var result = [String]()
+        for item in list {
+            if set.contains(item) {
+                result.append(String(item))
+            }
+        }
+        return result
+    }
+    
+    func middleNode(_ head: SortedNode?) -> SortedNode? {
+        if head == nil {
+            return nil
+        }
+        let length = lengthOfList(head)
+        var x = length / 2
+        var curr = head
+        while x != 0 && curr != nil {
+            curr = curr?.next
+            x -= 1
+        }
+        return curr
+    }
+    
+    static func relativeSortArray(_ arr1: [Int], _ arr2: [Int]) -> [Int] {
+        if arr1.isEmpty {
+            return []
+        }
+        else if arr2.isEmpty {
+            return arr1.sorted()
+        }
+        var map = [Int: [Int]]()
+        var result = [Int]()
+        for item in arr1 {
+            if var val = map[item] {
+                val.append(item)
+                map[item] = val
+            }
+            else {
+                map[item] = [item]
+            }
+        }
+        for item in arr2 {
+            if let val = map[item] {
+                result.append(contentsOf: val)
+                map.removeValue(forKey: item)
+            }
+        }
+        var temp = [Int]()
+        for val in map {
+            temp.append(contentsOf: val.value)
+        }
+        if !temp.isEmpty {
+            result.append(contentsOf: temp.sorted())
+        }
+        return result
+    }
+    
+    static func removeDuplicatesChars(_ S: String) -> String {
+        if S.isEmpty {
+            return ""
+        }
+        var sVal = Array(S)
+        var i = 0
+        while i < sVal.count - 1 {
+            if sVal[i] == sVal[i + 1] {
+                sVal.removeSubrange(i...i+1)
+            }
+            else if i - 1 >= 0 && sVal[i - 1] == sVal[i] {
+                sVal.removeSubrange(i - 1...i)
+            }
+            else {
+                i += 1
+            }
+        }
+        let x = sVal.reduce("") { (prev, curr) -> String in
+            prev + String(curr)
+        }
+        return x
+    }
+    
+    func shuffle(_ nums: [Int], _ n: Int) -> [Int] {
+        if nums.isEmpty {
+            return []
+        }
+        var result = [Int]()
+        for i in 0..<n {
+            result.append(nums[i])
+            result.append(nums[n + i])
+        }
+        return result
+    }
+    
+    func restoreString(_ s: String, _ indices: [Int]) -> String {
+        if s.isEmpty {
+            return ""
+        }
+        
+        let sVal = Array(s)
+        var result = Array(repeating: "", count: sVal.count)
+        var i = 0
+        for item in indices {
+            result[item] = String(sVal[i])
+            i += 1
+        }
+        let x = result.reduce("") { (prev, curr) -> String in
+            prev + curr
+        }
+        return x
+    }
 }
 
 class ArrayReader {
