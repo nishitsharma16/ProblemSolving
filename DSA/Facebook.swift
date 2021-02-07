@@ -2148,8 +2148,10 @@ extension Problems {
             return true
         }
         
-        let s1Len = s1.count
-        let s2Len = s2.count
+        let s1Val = Array(s1)
+        let s2Val = Array(s2)
+        let s1Len = s1Val.count
+        let s2Len = s2Val.count
         if s1Len > s2Len {
             return false
         }
@@ -2158,12 +2160,12 @@ extension Problems {
         let aCharacter: Character = "a"
         let firstAscii = aCharacter.asciiValue
         for i in 0..<s1Len {
-            if let x = s1[i].asciiValue, let y = firstAscii {
+            if let x = s1Val[i].asciiValue, let y = firstAscii {
                 let val = Int(x - y)
                 s1Map[val] += 1
             }
             
-            if let x = s2[i].asciiValue, let y = firstAscii {
+            if let x = s2Val[i].asciiValue, let y = firstAscii {
                 let val = Int(x - y)
                 s2Map[val] += 1
             }
@@ -2173,11 +2175,11 @@ extension Problems {
             if checkMapForPermutation(s1Map, s2Map) {
                 return true
             }
-            if let x = s2[i + s1Len].asciiValue, let y = firstAscii {
+            if let x = s2Val[i + s1Len].asciiValue, let y = firstAscii {
                 let val = Int(x - y)
                 s2Map[val] += 1
             }
-            if let x = s2[i].asciiValue, let y = firstAscii {
+            if let x = s2Val[i].asciiValue, let y = firstAscii {
                 let val = Int(x - y)
                 s2Map[val] -= 1
             }

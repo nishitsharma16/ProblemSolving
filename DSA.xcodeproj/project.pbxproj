@@ -41,6 +41,7 @@
 		18CC596B243A6A8300185D52 /* DSAUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC596A243A6A8300185D52 /* DSAUITests.swift */; };
 		18CC5979243A6AA600185D52 /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC5978243A6AA600185D52 /* Heap.swift */; };
 		18CC597B243BB22E00185D52 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC597A243BB22D00185D52 /* PriorityQueue.swift */; };
+		18CC99E825CC64DB007740A7 /* Adobe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC99E725CC64DB007740A7 /* Adobe.swift */; };
 		18D9AC5325792F27002020D5 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D9AC5225792F27002020D5 /* CustomTableView.swift */; };
 		18D9AC5B25793B51002020D5 /* TableViewCellQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D9AC5A25793B51002020D5 /* TableViewCellQueue.swift */; };
 		18D9AC6025796DE9002020D5 /* View+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D9AC5F25796DE9002020D5 /* View+Addition.swift */; };
@@ -108,6 +109,7 @@
 		18CC596C243A6A8300185D52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18CC5978243A6AA600185D52 /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
 		18CC597A243BB22D00185D52 /* PriorityQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
+		18CC99E725CC64DB007740A7 /* Adobe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adobe.swift; sourceTree = "<group>"; };
 		18D9AC5225792F27002020D5 /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		18D9AC5A25793B51002020D5 /* TableViewCellQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellQueue.swift; sourceTree = "<group>"; };
 		18D9AC5F25796DE9002020D5 /* View+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Addition.swift"; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				18D9AC6425798077002020D5 /* MultiSet.swift */,
 				18F20EF325850C8600FC543F /* MockSession.swift */,
 				183117062587BFF3008E8008 /* Microsoft.swift */,
+				18CC99E725CC64DB007740A7 /* Adobe.swift */,
 			);
 			path = DSA;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				18D9AC5B25793B51002020D5 /* TableViewCellQueue.swift in Sources */,
 				18D9AC5325792F27002020D5 /* CustomTableView.swift in Sources */,
 				1835A5C72469C2C300B2B0AF /* BST.swift in Sources */,
+				18CC99E825CC64DB007740A7 /* Adobe.swift in Sources */,
 				18F20EEF2582602B00FC543F /* Observer.swift in Sources */,
 				1816CD882490C8CF00E37BAC /* DP.swift in Sources */,
 				181D1C4E2448DD01004E0E08 /* ArrayExtension.swift in Sources */,

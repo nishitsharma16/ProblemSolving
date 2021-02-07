@@ -127,7 +127,7 @@ class ViewController: UIViewController {
         "7.5.3"
         var list = [0,1,0,3,12]
         
-        Problems.removeDuplicatesChars("abbaca")
+        Problems.checkPossibilityForNonDecreasingArray([1,5,4,6,7,10,8,9])
         
 //        queueDispatch()
 
