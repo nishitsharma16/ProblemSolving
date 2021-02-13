@@ -72,18 +72,22 @@ extension Problems {
         var currDay = 1
         while currDay <= maxDay {
             
+            var isAttended = false
+            
             if let val = map[currDay] {
                 for item in val {
                     queue.insert(element: item)
                 }
             }
             
-            while !queue.isEmpty, let top = queue.getRoot(), top < currDay {
-                let _ = queue.extract()
+            while !queue.isEmpty {
+                if let endDay = queue.extract(), endDay >= currDay {
+                    isAttended = true
+                    break
+                }
             }
             
-            if !queue.isEmpty {
-                let _ = queue.extract()
+            if isAttended {
                 counter += 1
             }
             

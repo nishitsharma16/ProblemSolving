@@ -42,6 +42,10 @@ class Heap<Element : Comparable> {
     
     func maxHeapify(index : Int) {
         
+        if index >= list.count / 2 {
+            return
+        }
+        
         let left = 2*index + 1
         let right = 2*index + 2
         
@@ -62,6 +66,10 @@ class Heap<Element : Comparable> {
     }
     
     func minHeapify(index : Int) {
+        
+        if index >= list.count / 2 {
+            return
+        }
         
         let left = 2*index + 1
         let right = 2*index + 2

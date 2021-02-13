@@ -127,7 +127,12 @@ class ViewController: UIViewController {
         "7.5.3"
         var list = [0,1,0,3,12]
         
-        Problems.checkPossibilityForNonDecreasingArray([1,5,4,6,7,10,8,9])
+//        Problems.largestDivisibleSubset([1,2,4,8])
+        
+        let tree = NumArray([1,3,5])
+        tree.sumRange(0, 2)
+        tree.update(1, 2)
+        tree.sumRange(0, 2)
         
 //        queueDispatch()
 
