@@ -129,11 +129,15 @@ class ViewController: UIViewController {
         
 //        Problems.largestDivisibleSubset([1,2,4,8])
         
-        let tree = NumArray([1,3,5])
-        tree.sumRange(0, 2)
-        tree.update(1, 2)
-        tree.sumRange(0, 2)
+//        let tree = NumArray([1,3,5])
+//        tree.sumRange(0, 2)
+//        tree.update(1, 2)
+//        tree.sumRange(0, 2)
         
+//        let uglyNum = UglyNumberSolution()
+//        uglyNum.nthUglyNumber(10)
+        
+        Problems.containsNearbyDuplicate([1,2,3,4,5,1], 3)
 //        queueDispatch()
 
     }

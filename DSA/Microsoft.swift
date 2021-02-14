@@ -936,7 +936,7 @@ extension Problems {
         }
     }
     
-    func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
+    static func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
         if k < 1 {
             return false
         }

@@ -399,52 +399,26 @@ extension Problems {
         let dstX = m - 1
         let dstY = n - 1
 
-        var dp = Array(repeating: Array(repeating: 0, count: n + 1), count: m + 1)
+        var dp = Array(repeating: Array(repeating: 0, count: n), count: m)
         dp[0][0] = grid[0][0]
         
-        for i in 1...m {
-            dp[i][0] =  dp[i - 1][0] + grid[i][0]
-        }
-        
-        for j in 1...n {
-            dp[0][j] =  dp[0][j - 1] + grid[0][j]
-        }
-        
-        for i in 1...m {
-            for j in 1...n {
-                dp[i][j] = min(min(dp[i - 1][j - 1], dp[i - 1][j]), dp[i][j - 1]) + grid[i][j]
+        for i in 0..<m {
+            if i >= 0 {
+                dp[i][0] =  dp[i - 1][0] + grid[i][0]
             }
         }
         
-        return dp[dstX][dstY]
-    }
-    
-    //https://www.geeksforgeeks.org/min-cost-path-dp-6/ minCost
-    // This is when user moves right, down
-    static func minPathSumV2(_ grid: [[Int]]) -> Int {
-        if grid.isEmpty {
-            return 0
+        for j in 0..<n {
+            if j >= 0 {
+                dp[0][j] =  dp[0][j - 1] + grid[0][j]
+            }
         }
         
-        let m = grid.count
-        let n = grid[0].count
-        let dstX = m - 1
-        let dstY = n - 1
-
-        var dp = Array(repeating: Array(repeating: 0, count: n + 1), count: m + 1)
-        dp[0][0] = grid[0][0]
-
-        for i in 1...m {
-            dp[i][0] =  dp[i - 1][0] + grid[i][0]
-        }
-        
-        for j in 1...n {
-            dp[0][j] =  dp[0][j - 1] + grid[0][j]
-        }
-        
-        for i in 1...m {
-            for j in 1...n {
-                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+        for i in 0..<m {
+            for j in 0..<n {
+                if i >= 0 && j >= 0 {
+                    dp[i][j] = min(min(dp[i - 1][j - 1], dp[i - 1][j]), dp[i][j - 1]) + grid[i][j]
+                }
             }
         }
         

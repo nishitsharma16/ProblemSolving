@@ -235,6 +235,123 @@ extension Problems {
         }
         return result & m
     }
+    
+    static func dfsLexicalOrderNumbers(_ i: Int, _ n: Int, _ result: inout [Int]) {
+        if i > n {
+            return
+        }
+        result.append(i)
+        for j in 0..<10 {
+            dfsLexicalOrderNumbers(10*i + j, n, &result)
+        }
+    }
+    
+    static func lexicalOrderNumbers(_ n: Int) -> [Int] {
+        var result = [Int]()
+        for i in 1...9 {
+            dfsLexicalOrderNumbers(i, n, &result)
+        }
+        return result
+    }
+    
+    //https://www.geeksforgeeks.org/min-cost-path-dp-6/ minCost
+    // This is when user moves right, down
+    static func minPathSumV3(_ grid: [[Int]]) -> Int {
+        if grid.isEmpty {
+            return 0
+        }
+        
+        let m = grid.count
+        let n = grid[0].count
+        let dstX = m - 1
+        let dstY = n - 1
+        
+        var dp = Array(repeating: Array(repeating: 0, count: n), count: m)
+        dp[0][0] = grid[0][0]
+        
+        for i in 0..<m {
+            if i >= 1 {
+                dp[i][0] =  dp[i - 1][0] + grid[i][0]
+            }
+        }
+        
+        for j in 0..<n {
+            if j >= 1 {
+                dp[0][j] =  dp[0][j - 1] + grid[0][j]
+            }
+        }
+        
+        for i in 0..<m {
+            for j in 0..<n {
+                if i >= 1 && j >= 1 {
+                    dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+                }
+            }
+        }
+        
+        return dp[dstX][dstY]
+    }
+    
+    func generateTreesHelper(_ start: Int, _ end: Int) -> [TreeNode?] {
+        var list = Array<TreeNode?>()
+        if start > end {
+            list.append(nil)
+            return list
+        }
+        
+        for i in start...end {
+            let left = generateTreesHelper(start, i - 1)
+            let right = generateTreesHelper(i + 1, end)
+            for l in left {
+                for r in right {
+                    let currNode = TreeNode(val: i)
+                    currNode.left = l
+                    currNode.right = r
+                    list.append(currNode)
+                }
+            }
+        }
+        return list
+    }
+    
+    func generateTrees(_ n: Int) -> [TreeNode?] {
+        if n <= 0 {
+            return []
+        }
+        return generateTreesHelper(1, n)
+    }
+    
+    //Catalan Number = nCn+1 = 2(2n + 1)/(n + 2)
+    func numOfUniqueBST(_ n: Int) -> Int {
+        var value: Double = 1
+        for i in 0..<n {
+            let x = Double(i)
+            value = value * (2*(2*x + 1)/(x + 2))
+        }
+        return Int(value)
+    }
+    
+    static func convertToTitle(_ n: Int) -> String {
+        if n < 1 {
+            return ""
+        }
+        
+        let a: Character = "A"
+        let aAscii = a.asciiValue ?? 65
+        let aAsciiInt = Int(aAscii)
+        var val = n
+        var result = ""
+        while val > 0 {
+            var y = val % 26
+            if y == 0 {
+                y = 26
+                val -= 1
+            }
+            result = String(UnicodeScalar(UInt8(aAsciiInt + y - 1))) + result
+            val = val / 26
+        }
+        return result
+    }
 }
 
 // Segment Tree
@@ -309,5 +426,39 @@ class NumArray {
         }
         let mid = (left + right)/2
         return subRangeSumHelper(tree, lInput, rInput, left, mid, 2*pos + 1) + subRangeSumHelper(tree, lInput, rInput, mid + 1, right, 2*pos + 2)
+    }
+}
+
+class UglyNumberSolution {
+    
+    private var list = Array<Int>(repeating: 0, count: 1690)
+    init() {
+        var i2 = 0
+        var i3 = 0
+        var i5 = 0
+        list[0] = 1
+        var nextVal = 1
+        var nextVal2 = 2
+        var nextVal3 = 3
+        var nextVal5 = 5
+        for i in 1..<1690 {
+            nextVal = min(min(nextVal2, nextVal3), nextVal5)
+            list[i] = nextVal
+            if nextVal == nextVal2 {
+                i2 += 1
+                nextVal2 = list[i2] * 2
+            }
+            if nextVal == nextVal3 {
+                i3 += 1
+                nextVal3 = list[i3] * 3
+            }
+            if nextVal == nextVal5 {
+                i5 += 1
+                nextVal5 = list[i5] * 5
+            }
+        }
+    }
+    func nthUglyNumber(_ n: Int) -> Int {
+        return n <= 1690 ? list[n - 1] : -1
     }
 }

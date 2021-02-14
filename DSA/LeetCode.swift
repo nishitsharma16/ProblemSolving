@@ -1402,12 +1402,15 @@ extension Problems {
     
     static func longestCommonPrefixHelper(small: String, str: String) -> String {
         var result = ""
+        let smallVal = Array(small)
+        let strVal = Array(str)
+
         for index in 0..<small.count {
-            if small[index] != str[index] {
+            if smallVal[index] != strVal[index] {
                 break
             }
             else {
-                result += String(small[index])
+                result += String(smallVal[index])
             }
         }
         return result
@@ -1515,8 +1518,10 @@ extension Problems {
             return 0
         }
         
-        let strLength = str.count
-        let niddleLength = niddle.count
+        let sVal = Array(str)
+        let nVal = Array(niddle)
+        let strLength = sVal.count
+        let niddleLength = nVal.count
         
         if niddleLength > strLength {
             return -1
@@ -1527,19 +1532,20 @@ extension Problems {
         for i in 0...(strLength - niddleLength) {
             var j = 0
             while j < niddleLength {
-                if str[i + j] != niddle[j] {
+                if sVal[i + j] != nVal[j] {
                     break
                 }
                 j += 1
             }
             if j == niddleLength {
                 index = i
+                break
             }
         }
         return index
     }
     
-    static func calculateLSP(str: String) -> [Int] {
+    static func calculateLSP(str: Array<Character>) -> [Int] {
         if str.isEmpty {
             return []
         }
@@ -1547,18 +1553,18 @@ extension Problems {
         let length = str.count
         var result = [Int](repeating: 0, count: length)
         var i = 1
-        var l = 0
+        var j = 0
         result[0] = 0
         
         while i < length {
-            if str[i] == str[l] {
-                l += 1
-                result[i] = l
+            if str[i] == str[j] {
+                result[i] = j + 1
                 i += 1
+                j += 1
             }
             else {
-                if l > 0 {
-                    l = result[l - 1]
+                if j > 0 {
+                    j = result[j - 1]
                 }
                 else {
                     result[i] = 0
@@ -1574,6 +1580,8 @@ extension Problems {
             return []
         }
         
+        let sVal = Array(str)
+        let nVal = Array(niddle)
         let strLength = str.count
         let niddleLength = niddle.count
         
@@ -1582,13 +1590,13 @@ extension Problems {
         }
         
         var positions = [Int]()
-        let lps = calculateLSP(str: niddle)
+        let lps = calculateLSP(str: nVal)
         
         var i = 0
         var j = 0
         while i < strLength {
             if j < niddleLength {
-                if str[i] == niddle[j] {
+                if sVal[i] == nVal[j] {
                     j += 1
                     i += 1
                 }
@@ -1597,7 +1605,7 @@ extension Problems {
                     j = lps[j - 1]
                 }
                 else {
-                    if str[i] != niddle[j] {
+                    if sVal[i] != nVal[j] {
                         if j != 0 {
                             j = lps[j - 1]
                         }
@@ -1620,20 +1628,22 @@ extension Problems {
             return 0
         }
         
-        let strLength = str.count
-        let niddleLength = niddle.count
+        let sVal = Array(str)
+        let nVal = Array(niddle)
+        let strLength = sVal.count
+        let niddleLength = nVal.count
         
         if niddleLength > strLength {
             return -1
         }
         
-        let lps = calculateLSP(str: niddle)
+        let lps = calculateLSP(str: nVal)
         
         var i = 0
         var j = 0
         while i < strLength {
             if j < niddleLength {
-                if str[i] == niddle[j] {
+                if sVal[i] == nVal[j] {
                     j += 1
                     i += 1
                 }
@@ -1643,7 +1653,7 @@ extension Problems {
 //                    j = lps[j - 1]
                 }
                 else {
-                    if i >= 0  && j >= 0 && i < strLength && j < niddleLength && str[i] != niddle[j] {
+                    if i >= 0  && j >= 0 && i < strLength && j < niddleLength && sVal[i] != nVal[j] {
                         if j != 0 {
                             j = lps[j - 1]
                         }
