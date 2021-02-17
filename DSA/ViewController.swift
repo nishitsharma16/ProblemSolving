@@ -123,23 +123,26 @@ class ViewController: UIViewController {
 //        val.next(3)
 //        val.next(5)
         
-        "7.5.2.4"
-        "7.5.3"
-        var list = [0,1,0,3,12]
-        
-//        Problems.largestDivisibleSubset([1,2,4,8])
-        
-//        let tree = NumArray([1,3,5])
+//        "7.5.2.4"
+//        "7.5.3"
+//        var list = [0,1,0,3,12]
+//
+////        Problems.largestDivisibleSubset([1,2,4,8])
+//
+//        let tree = NumArray([])
 //        tree.sumRange(0, 2)
 //        tree.update(1, 2)
 //        tree.sumRange(0, 2)
-        
-//        let uglyNum = UglyNumberSolution()
-//        uglyNum.nthUglyNumber(10)
-        
-        Problems.containsNearbyDuplicate([1,2,3,4,5,1], 3)
+//
+////        let uglyNum = UglyNumberSolution()
+////        uglyNum.nthUglyNumber(10)
+//
+//        Problems.containsNearbyDuplicate([1,2,3,4,5,1], 3)
 //        queueDispatch()
 
+//        let home = MyOffice()
+//        home.dry()
+        queueDispatch()
     }
     
     func queueDispatch() {
@@ -156,6 +159,9 @@ class ViewController: UIViewController {
                 print("E")
                 DispatchQueue.main.sync {
                     print("F")
+                    DispatchQueue.global().async {
+                        print("G")
+                    }
                 }
             }
             print("H")
@@ -451,8 +457,41 @@ extension Test2WordItem : Comparable {
 }
 
 class MyClass {
+    var delegate: MyHomeDelegate?
+    var completionHandlers = [() -> Void]()
+    func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+        completionHandlers.append(completionHandler)
+    }
     
+    lazy var someClosure = {
+        [weak self]
+        (index: Int, stringToProcess: String) -> String? in
+        self?.myclassWork()
+    }
+    
+    
+    func myclassWork() -> String {
+        ""
+    }
+    
+    func test() {
+        someFunctionWithEscapingClosure { [self] in
+            let x = myclassWork()
+        }
+    }
 }
+
+//struct SomeStruct {
+//    var x = 10
+//    var completionHandlers = [() -> Void]()
+//    mutating func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+//        completionHandlers.append(completionHandler)
+//    }
+//    // Escaping closoure can't capture mutating refrence of self of Struct and Enum
+//    mutating func doSomething() {
+//        someFunctionWithEscapingClosure { self.x = 100 }     // Error
+//    }
+//}
 
 
 //infix operator ====
@@ -464,3 +503,32 @@ class MyClass {
 //}
 
 
+protocol MyHomeDelegate: AnyObject {
+    func wash()
+}
+
+//struct MyHome {
+//    var delegate: MyHomeDelegate?
+//    func doWork() {
+//        delegate?.wash()
+//    }
+//}
+//
+//struct MyOffice: MyHomeDelegate {
+//    var item: MyHome
+//
+//    init() {
+//        item = MyHome()
+//        item.delegate = self
+//    }
+//
+//    func wash() {
+//        defer {
+//        }
+//        print("wash")
+//    }
+//
+//    func dry() {
+//        item.doWork()
+//    }
+//}

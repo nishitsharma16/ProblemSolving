@@ -352,17 +352,153 @@ extension Problems {
         }
         return result
     }
+    
+    func minDepth(_ root: TreeNode?) -> Int {
+        if root == nil {
+            return 0
+        }
+        else if root?.left == nil && root?.right == nil {
+            return 1
+        }
+        var minDepthVal = Int.max
+        if root?.left != nil {
+            minDepthVal = min(minDepth(root?.left), minDepthVal)
+        }
+        if root?.right != nil {
+            minDepthVal = min(minDepth(root?.right), minDepthVal)
+        }
+        return minDepthVal + 1
+    }
+    
+    static func searchInsertV2(list: [Int], val: Int) -> Int {
+        if list.isEmpty {
+            return -1
+        }
+        
+        let length = list.count
+        var left = 0
+        var right = length - 1
+        while left <= right {
+            let mid = (left + right)/2
+            if val == list[mid] {
+                return mid
+            }
+            else if val < list[mid] {
+                right = mid - 1
+            }
+            else {
+                left = mid + 1
+            }
+        }
+        return left
+    }
+    
+    func twoSumIndexes(_ nums: [Int], _ target: Int) -> [Int] {
+        if nums.isEmpty {
+            return []
+        }
+        var map = [Int: Int]()
+        for i in 0..<nums.count {
+            map[nums[i]] = i
+        }
+        var set = Set<Int>()
+        for i in 0..<nums.count {
+            let x = target - nums[i]
+            if set.contains(x), let index = map[x] {
+                return [index, i]
+            }
+            set.insert(nums[i])
+        }
+        return []
+    }
+    
+    func climbStairsV2(_ n: Int) -> Int {
+        if n == 1 {
+            return 1
+        }
+        else if n == 2 {
+            return 2
+        }
+        var a = 1
+        var b = 2
+        var c = 0
+        for _ in 3...n {
+            c = a + b
+            a = b
+            b = c
+        }
+        return c
+    }
+    
+    func climbStairsNStairsMSteps(_ n: Int, _ m: Int) -> Int {
+        if n == 1 {
+            return 1
+        }
+        else if n == 2 {
+            return 2
+        }
+        var list = Array(repeating: 0, count: n + 1)
+        list[1] = 1
+        for i in 2...n {
+            for j in 1...m {
+                if i <= j {
+                    list[i] += list[i - j]
+                }
+            }
+        }
+        return list[n]
+    }
+    
+    func climbStairsNStairsMStepsV2(_ n: Int, _ m: Int) -> Int {
+        if n == 1 {
+            return 1
+        }
+        else if n == 2 {
+            return 2
+        }
+        var list = Array(repeating: 0, count: n + 1)
+        var temp = 0
+        for i in 1...n {
+            let x = i - m - 1
+            if x >= 0 {
+                temp -= list[x]
+            }
+            temp += list[i - 1]
+            list[i] = temp
+        }
+        return list[n]
+    }
+    
+    func sumOfLeftLeavesHelper(_ root: TreeNode?, _ side: String) -> Int {
+        if root == nil {
+            return 0
+        }
+        var x = 0
+        if side == "l", root?.left == nil, root?.right == nil, let val = root?.value {
+            x = val
+        }
+        return x + sumOfLeftLeavesHelper(root?.right, "r") + sumOfLeftLeavesHelper(root?.left, "l")
+    }
+    
+    func sumOfLeftLeaves(_ root: TreeNode?) -> Int {
+        if root == nil {
+            return 0
+        }
+        return sumOfLeftLeavesHelper(root, "r")
+    }
 }
 
 // Segment Tree
 class NumArray {
 
-    private var tree: Array<Int>
-    private var list: [Int]
+    private var tree = Array<Int>()
+    private var list = [Int]()
     init(_ nums: [Int]) {
-        list = nums
-        tree = Array<Int>(repeating: 0, count: NumArray.getNumberOfTreeNodes(nums.count))
-        buildTree(&tree, nums, 0, nums.count - 1, 0)
+        if !nums.isEmpty {
+            list = nums
+            tree = Array<Int>(repeating: 0, count: NumArray.getNumberOfTreeNodes(nums.count))
+            buildTree(&tree, nums, 0, nums.count - 1, 0)
+        }
     }
     
     func update(_ index: Int, _ val: Int) {

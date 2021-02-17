@@ -291,6 +291,9 @@
 		18CC593D243A6A7F00185D52 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					Work,
+				);
 				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Mine;
@@ -575,6 +578,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ON_DEMAND_RESOURCES_INITIAL_INSTALL_TAGS = Work;
 				PRODUCT_BUNDLE_IDENTIFIER = Swift.DSA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -593,6 +597,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ON_DEMAND_RESOURCES_INITIAL_INSTALL_TAGS = Work;
 				PRODUCT_BUNDLE_IDENTIFIER = Swift.DSA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

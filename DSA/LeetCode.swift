@@ -1678,14 +1678,9 @@ extension Problems {
             if let last = list.last, last < val {
                 return length
             }
-            else if list[0] > val {
-                return 0
-            }
-            else {
-                for index in 0..<length {
-                    if list[index] > val {
-                        return index
-                    }
+            for index in 0..<length {
+                if list[index] > val {
+                    return index
                 }
             }
         }

@@ -4101,12 +4101,15 @@ extension Problems {
     }
     
     func climbStairs(_ n: Int) -> Int {
-        if n <= 1 {
+        if n == 1 {
             return 1
         }
+        else if n == 2 {
+            return 2
+        }
         var list = Array(repeating: 0, count: n + 1)
-        list[0] = 1
-        list[1] = 2
+        list[1] = 1
+        list[2] = 2
         for i in 3...n {
             list[i] = list[i - 1] + list[i - 2]
         }
