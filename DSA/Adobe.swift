@@ -486,6 +486,173 @@ extension Problems {
         }
         return sumOfLeftLeavesHelper(root, "r")
     }
+    
+    func findDisappearedNumbersV2(_ nums: [Int]) -> [Int] {
+        if nums.isEmpty {
+            return []
+        }
+        var items = nums
+        for i in 0..<items.count {
+            if items[abs(items[i]) - 1] > 0 {
+                items[abs(items[i]) - 1] = -items[abs(items[i]) - 1]
+            }
+        }
+        var result = [Int]()
+        for i in 0..<items.count {
+            if items[i] > 0 {
+                result.append(i + 1)
+            }
+        }
+        return result
+    }
+    
+    static func containsDuplicateV2(_ nums: [Int]) -> Bool {
+        if nums.isEmpty {
+            return false
+        }
+        var items = nums
+        for i in 0..<items.count {
+            if items[abs(items[i]) - 1] > 0 {
+                items[abs(items[i]) - 1] = -items[abs(items[i]) - 1]
+            }
+            else {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func canWinNim(_ n: Int) -> Bool {
+        var list = Array<Int>(repeating: 0, count: n + 1)
+        list[1] = 1
+        list[2] = 2
+        var left = n - 3
+        var j = 3
+        while left > 0 && j <= n  {
+            if j % 2 != 0 {
+                if left <= 3 {
+                    return true
+                }
+            }
+            list[j] = list[j - 3] + list[j - 2] + list[j - 1]
+            left -= list[j]
+            j += 1
+        }
+        return false
+    }
+    
+    func findTheDifference(_ s: String, _ t: String) -> Character {
+        let sVal = Array(s)
+        var tVal = Array(t)
+        for i in 0..<sVal.count {
+            if let index = tVal.firstIndex(of: sVal[i]) {
+                tVal.remove(at: index)
+            }
+        }
+        return tVal[0]
+    }
+    
+    //XOR Operation
+    func findTheDifferenceV2(_ s: String, _ t: String) -> Character {
+        let sVal = Array(s)
+        let tVal = Array(t)
+        var x: UInt8 = 0
+        for i in 0..<sVal.count {
+            if let val = sVal[i].asciiValue {
+                x ^= val
+            }
+        }
+        for i in 0..<tVal.count {
+            if let val = tVal[i].asciiValue {
+                x ^= val
+            }
+        }
+        return Character(UnicodeScalar(x))
+    }
+    
+    func getSum(_ a: Int, _ b: Int) -> Int {
+        var x = abs(a)
+        var y = abs(b)
+        if x < y {
+            return getSum(b, a)
+        }
+        
+        let sign = a > 0 ? 1 : -1
+        
+        if a*b > 0 {
+            while y != 0 {
+                let ans = x ^ y
+                let carry = (x & y) << 1
+                x = ans
+                y = carry
+            }
+        }
+        else {
+            while y != 0 {
+                let ans = x ^ y
+                let carry = (~x & y) << 1
+                x = ans
+                y = carry
+            }
+        }
+        
+        return x * sign
+    }
+    
+    func countBits(_ num: Int) -> [Int] {
+        var result = [Int]()
+        for i in 0...num {
+            var one = 1
+            var n = i
+            var counter = 0
+            for _ in 0..<32 {
+                n ^= one
+                if n != 0 {
+                    counter += 1
+                }
+                one = one << 1
+            }
+            result.append(counter)
+        }
+        return result
+    }
+    
+    func reverseBits(_ n: Int) -> Int {
+        var result = 0
+        var nVal = n
+        var pow = 31
+        while nVal != 0 {
+            result += (n & 1) << pow
+            nVal = nVal >> 1
+            pow -= 1
+        }
+        return result
+    }
+    
+    func robHouseHelper(_ nums: [Int], _ start: Int, _ end: Int) -> Int {
+        if nums.isEmpty {
+            return 0
+        }
+        
+        var prevMax = 0
+        var currMax = 0
+        for i in start...end {
+            let x = currMax
+            currMax = max(prevMax + nums[i], currMax)
+            prevMax = x
+        }
+        return currMax
+    }
+    
+    func robHouse2(_ nums: [Int]) -> Int {
+        if nums.isEmpty {
+            return 0
+        }
+        
+        let max1 = robHouseHelper(nums, 0, nums.count - 2)
+        let max2 = robHouseHelper(nums, 1, nums.count - 1)
+        return max(max1, max2)
+    }
 }
 
 // Segment Tree

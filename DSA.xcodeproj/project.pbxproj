@@ -28,6 +28,9 @@
 		1895B41F25108F3F0028F504 /* Linkedin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1895B41E25108F3F0028F504 /* Linkedin.swift */; };
 		1897D1BB243CEE9D00B23934 /* StringDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897D1BA243CEE9D00B23934 /* StringDS.swift */; };
 		1897D1BD2440FAA100B23934 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897D1BC2440FAA100B23934 /* StringExtension.swift */; };
+		189B484425DECCE0005AFDF5 /* TestSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B484325DECCE0005AFDF5 /* TestSwift.swift */; };
+		189B484A25DEE516005AFDF5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B484825DEE516005AFDF5 /* DetailViewController.swift */; };
+		189B484B25DEE516005AFDF5 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189B484925DEE516005AFDF5 /* DetailViewController.xib */; };
 		18A54C2625022CC5004107A5 /* GenericDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A54C2525022CC5004107A5 /* GenericDataStructures.swift */; };
 		18BBDC90249752A2002BE2BC /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BBDC8F249752A2002BE2BC /* LRUCache.swift */; };
 		18BBDC9224977B7A002BE2BC /* CustomTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BBDC9124977B7A002BE2BC /* CustomTypes.swift */; };
@@ -90,6 +93,9 @@
 		1895B41E25108F3F0028F504 /* Linkedin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linkedin.swift; sourceTree = "<group>"; };
 		1897D1BA243CEE9D00B23934 /* StringDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDS.swift; sourceTree = "<group>"; };
 		1897D1BC2440FAA100B23934 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		189B484325DECCE0005AFDF5 /* TestSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSwift.swift; sourceTree = "<group>"; };
+		189B484825DEE516005AFDF5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		189B484925DEE516005AFDF5 /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 		18A54C2525022CC5004107A5 /* GenericDataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDataStructures.swift; sourceTree = "<group>"; };
 		18BBDC8F249752A2002BE2BC /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
 		18BBDC9124977B7A002BE2BC /* CustomTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypes.swift; sourceTree = "<group>"; };
@@ -207,6 +213,9 @@
 				18F20EF325850C8600FC543F /* MockSession.swift */,
 				183117062587BFF3008E8008 /* Microsoft.swift */,
 				18CC99E725CC64DB007740A7 /* Adobe.swift */,
+				189B484325DECCE0005AFDF5 /* TestSwift.swift */,
+				189B484825DEE516005AFDF5 /* DetailViewController.swift */,
+				189B484925DEE516005AFDF5 /* DetailViewController.xib */,
 			);
 			path = DSA;
 			sourceTree = "<group>";
@@ -339,6 +348,7 @@
 				18CC5955243A6A8300185D52 /* LaunchScreen.storyboard in Resources */,
 				18CC5952243A6A8300185D52 /* Assets.xcassets in Resources */,
 				18CC5950243A6A8000185D52 /* Main.storyboard in Resources */,
+				189B484B25DEE516005AFDF5 /* DetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +376,7 @@
 				183117072587BFF3008E8008 /* Microsoft.swift in Sources */,
 				18D9AC6525798077002020D5 /* MultiSet.swift in Sources */,
 				1816CD8C24924FFB00E37BAC /* LinkedList.swift in Sources */,
+				189B484425DECCE0005AFDF5 /* TestSwift.swift in Sources */,
 				1863B800256AE3A800FAF529 /* Extensions.swift in Sources */,
 				183669B32479A4EB00AB9608 /* Trie.swift in Sources */,
 				18A54C2625022CC5004107A5 /* GenericDataStructures.swift in Sources */,
@@ -391,6 +402,7 @@
 				1835A5C12467418E00B2B0AF /* Graph.swift in Sources */,
 				183179F8246DBF1E00C38603 /* BinaryTree.swift in Sources */,
 				18CC5949243A6A8000185D52 /* AppDelegate.swift in Sources */,
+				189B484A25DEE516005AFDF5 /* DetailViewController.swift in Sources */,
 				1808E426252B937E008B2619 /* Goldman.swift in Sources */,
 				1835A5BF246737EF00B2B0AF /* Algorithms.swift in Sources */,
 				18BBDC9224977B7A002BE2BC /* CustomTypes.swift in Sources */,

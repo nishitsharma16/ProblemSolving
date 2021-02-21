@@ -1685,21 +1685,26 @@ extension Problems {
     }
     
     // Not working
-    func depthAndParentForNode(_ root: TreeNode?, _ parent: TreeNode?, _ val: Int) -> (h: Int, r: TreeNode?) {
+    func depthAndParentForNode(_ root: TreeNode?, _ parent: TreeNode?, _ val: Int, _ level: Int) -> (h: Int, r: TreeNode?) {
         if root == nil {
             return (0, root)
         }
         else if let x = root?.value, val == x {
-            return (0, parent ?? root)
+            return (level, parent)
         }
-        let lHeight = depthAndParentForNode(root?.left, root, val)
-        let rHeight = depthAndParentForNode(root?.right, root, val)
-        return (max(lHeight.h, rHeight.h) + 1, lHeight.r ?? rHeight.r)
+        let lHeight = depthAndParentForNode(root?.left, root, val, level + 1)
+        let rHeight = depthAndParentForNode(root?.right, root, val, level + 1)
+        if lHeight.r != nil {
+            return lHeight
+        }
+        else {
+            return rHeight
+        }
     }
     
     func isCousins(_ root: TreeNode?, _ x: Int, _ y: Int) -> Bool {
-        let xVal = depthAndParentForNode(root, nil, x)
-        let yVal = depthAndParentForNode(root, nil, y)
+        let xVal = depthAndParentForNode(root, nil, x, 0)
+        let yVal = depthAndParentForNode(root, nil, y, 0)
         return xVal.h == yVal.h && xVal.r !== yVal.r
     }
     

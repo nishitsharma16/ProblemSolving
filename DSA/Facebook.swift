@@ -261,7 +261,7 @@ extension Problems {
         return result
     }
     
-    private static func decodeWaysHelper(_ s: String, _ index: Int, map: inout [Int : Int]) -> Int {
+    private static func decodeWaysHelper(_ s: Array<Character>, _ index: Int, map: inout [Int : Int]) -> Int {
         
         if index < s.count && s[index] == "0" {
             return 0
@@ -281,7 +281,7 @@ extension Problems {
         
         var result = decodeWaysHelper(s, index + 1, map: &map)
         
-        if let y = Int(String(s[s.index(s.startIndex, offsetBy: index)..<s.index(s.startIndex, offsetBy: index + 2)])), y <= 26 {
+        if let y = Int(String(s[index..<index + 2])), y <= 26 {
             result += decodeWaysHelper(s, index + 2, map: &map)
         }
         
@@ -295,8 +295,9 @@ extension Problems {
             return 0
         }
         
+        let sVal = Array(s)
         var map = [Int: Int]()
-        let x = decodeWaysHelper(s, 0, map: &map)
+        let x = decodeWaysHelper(sVal, 0, map: &map)
         return x
     }
     
@@ -4085,7 +4086,7 @@ extension Problems {
         return result
     }
     
-    func rob(_ nums: [Int]) -> Int {
+    func robHouse(_ nums: [Int]) -> Int {
         if nums.isEmpty {
             return 0
         }

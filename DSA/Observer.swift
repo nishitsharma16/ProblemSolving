@@ -7,7 +7,7 @@
 
 import Foundation
 
-private struct ObserverInfo {
+private class ObserverInfo {
 	fileprivate weak var value: AnyObject?
 	fileprivate let method: () -> Void
 	init(value: AnyObject, completion: @escaping () -> Void) {
@@ -25,7 +25,7 @@ final class Observer {
 	private var map = [String: [ObserverInfo]]()
 	
 	private let queue = DispatchQueue(label: "Observer Queue", qos: .utility, attributes: .concurrent)
-	func add<Element: AnyObject>(_ observer: Element, _ key: String, _ completion: @escaping () -> Void) {
+	func add(_ observer: AnyObject, _ key: String, _ completion: @escaping () -> Void) {
 		syncronized { [weak self] in
 			let observerInfo = ObserverInfo(value: observer, completion: completion)
 			if var val = self?.map[key] {
@@ -77,9 +77,7 @@ final class Observer {
 	}
 	
 	private func syncronized(_ f: @escaping () -> Void) {
-		queue.async(flags: .barrier) {
-			f()
-		}
+        queue.sync(execute: f)
 	}
 }
 

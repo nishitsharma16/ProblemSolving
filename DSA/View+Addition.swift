@@ -27,7 +27,7 @@ extension UIView {
         }
         
         Swizzle.once = true
-        method_exchangeImplementations(class_getInstanceMethod(self, #selector(UIView.hitTest(_:with:)))!, class_getInstanceMethod(self, #selector(UIView.swizzledHittest(_:with:)))!)
+        method_exchangeImplementations(class_getInstanceMethod(self, #selector(hitTest(_:with:)))!, class_getInstanceMethod(self, #selector(swizzledHittest(_:with:)))!)
     }
     
     @objc func swizzledHittest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -77,8 +77,7 @@ extension UIView {
     }
     
     func subViewString(_ sep: String) -> String {
-        var res = ""
-        res += sep + self.description
+        var res = sep + self.description
         for view in self.subviews {
             if view.subviews.count > 0 {
                 let y = sep + "|"
@@ -100,8 +99,11 @@ extension UIView {
 
 struct View {
     func findCommonAncesstor(_ view1: UIView?, _ view2: UIView?) -> UIView? {
-        if view1 == nil || view2 == nil {
-            return nil
+        if view1 != nil {
+            return view1
+        }
+        else if view2 != nil {
+            return view2
         }
         else if view1 == view2 {
             return view1

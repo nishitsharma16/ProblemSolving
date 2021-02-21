@@ -8,6 +8,22 @@
 
 import UIKit
 
+class Ob: NSObject {
+    
+}
+
+class Context {
+    
+}
+
+struct CodableType: Codable {
+    var x: String
+    var y: String {
+        x
+    }
+}
+
+
 class ViewController: UIViewController {
 
 //    var imageView : UIImageView!
@@ -21,8 +37,15 @@ class ViewController: UIViewController {
     
     var x: String = "Nishit"
     
+    override func loadView() {
+        super.loadView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let detail = DetailViewController(nibName: String(describing: DetailViewController.self), bundle: Bundle(for: DetailViewController.self))
+        self.navigationController?.pushViewController(detail, animated: true)
+        
 //        let x = "Nishit"
 //        let index = x.endIndex
 //        let val = x[x.endIndex]
@@ -142,7 +165,32 @@ class ViewController: UIViewController {
 
 //        let home = MyOffice()
 //        home.dry()
-        queueDispatch()
+//        Observer.shared.add(self, "") {
+//            
+//        }
+//        
+//        let ob = Ob()
+//        let cxt = UnsafeMutablePointer<Ob>.allocate(capacity: 10)
+//        
+//        self.addObserver(ob, forKeyPath: "do", options: .new, context: cxt)
+//        Problems.containsDuplicateV2([1,2,3,1])
+        let topView = UIView()
+        let view1 = UIView()
+        view1.addSubview(UIView())
+        view1.addSubview(UIView())
+        let view2 = UIView()
+        let view3 = UIView()
+        view3.addSubview(UIView())
+        view3.addSubview(UIView())
+        view2.addSubview(view3)
+        view2.addSubview(UIView())
+        topView.addSubview(view1)
+        topView.addSubview(view2)
+        let x = topView.subViewString("")
+    }
+    
+    override class func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
     }
     
     func queueDispatch() {
