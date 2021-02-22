@@ -174,19 +174,6 @@ class ViewController: UIViewController {
 //        
 //        self.addObserver(ob, forKeyPath: "do", options: .new, context: cxt)
 //        Problems.containsDuplicateV2([1,2,3,1])
-        let topView = UIView()
-        let view1 = UIView()
-        view1.addSubview(UIView())
-        view1.addSubview(UIView())
-        let view2 = UIView()
-        let view3 = UIView()
-        view3.addSubview(UIView())
-        view3.addSubview(UIView())
-        view2.addSubview(view3)
-        view2.addSubview(UIView())
-        topView.addSubview(view1)
-        topView.addSubview(view2)
-        let x = topView.subViewString("")
     }
     
     override class func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

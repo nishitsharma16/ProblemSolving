@@ -31,6 +31,8 @@
 		189B484425DECCE0005AFDF5 /* TestSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B484325DECCE0005AFDF5 /* TestSwift.swift */; };
 		189B484A25DEE516005AFDF5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B484825DEE516005AFDF5 /* DetailViewController.swift */; };
 		189B484B25DEE516005AFDF5 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189B484925DEE516005AFDF5 /* DetailViewController.xib */; };
+		189B485025E27851005AFDF5 /* MainEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B484F25E27851005AFDF5 /* MainEntry.swift */; };
+		189B485825E29012005AFDF5 /* Sequence+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B485725E29012005AFDF5 /* Sequence+Addition.swift */; };
 		18A54C2625022CC5004107A5 /* GenericDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A54C2525022CC5004107A5 /* GenericDataStructures.swift */; };
 		18BBDC90249752A2002BE2BC /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BBDC8F249752A2002BE2BC /* LRUCache.swift */; };
 		18BBDC9224977B7A002BE2BC /* CustomTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BBDC9124977B7A002BE2BC /* CustomTypes.swift */; };
@@ -96,6 +98,8 @@
 		189B484325DECCE0005AFDF5 /* TestSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSwift.swift; sourceTree = "<group>"; };
 		189B484825DEE516005AFDF5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		189B484925DEE516005AFDF5 /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		189B484F25E27851005AFDF5 /* MainEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEntry.swift; sourceTree = "<group>"; };
+		189B485725E29012005AFDF5 /* Sequence+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Addition.swift"; sourceTree = "<group>"; };
 		18A54C2525022CC5004107A5 /* GenericDataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDataStructures.swift; sourceTree = "<group>"; };
 		18BBDC8F249752A2002BE2BC /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
 		18BBDC9124977B7A002BE2BC /* CustomTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypes.swift; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 				189B484325DECCE0005AFDF5 /* TestSwift.swift */,
 				189B484825DEE516005AFDF5 /* DetailViewController.swift */,
 				189B484925DEE516005AFDF5 /* DetailViewController.xib */,
+				189B484F25E27851005AFDF5 /* MainEntry.swift */,
+				189B485725E29012005AFDF5 /* Sequence+Addition.swift */,
 			);
 			path = DSA;
 			sourceTree = "<group>";
@@ -383,6 +389,7 @@
 				18CC594D243A6A8000185D52 /* ViewController.swift in Sources */,
 				1895B41F25108F3F0028F504 /* Linkedin.swift in Sources */,
 				188236E62570EC0100192FEC /* Citrix.swift in Sources */,
+				189B485825E29012005AFDF5 /* Sequence+Addition.swift in Sources */,
 				1897D1BD2440FAA100B23934 /* StringExtension.swift in Sources */,
 				1863B7FB2569831A00FAF529 /* Dictionay+Additions.swift in Sources */,
 				1897D1BB243CEE9D00B23934 /* StringDS.swift in Sources */,
@@ -392,6 +399,7 @@
 				1895B41D25108F220028F504 /* Facebook.swift in Sources */,
 				1835A5C52467559700B2B0AF /* Stack.swift in Sources */,
 				18F20EF425850C8600FC543F /* MockSession.swift in Sources */,
+				189B485025E27851005AFDF5 /* MainEntry.swift in Sources */,
 				18D9AC5B25793B51002020D5 /* TableViewCellQueue.swift in Sources */,
 				18D9AC5325792F27002020D5 /* CustomTableView.swift in Sources */,
 				1835A5C72469C2C300B2B0AF /* BST.swift in Sources */,
