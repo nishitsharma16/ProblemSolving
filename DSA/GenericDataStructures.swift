@@ -20,22 +20,25 @@ class RandomizedSet {
     
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     func insert(_ val: Int) -> Bool {
-        if !list.contains(val) {
+        if let _ = info[val] {
+            return false
+        }
+        else {
             list.append(val)
             info[val] = list.count - 1
             return true
         }
-        return false
     }
     
     /** Removes a value from the set. Returns true if the set contained the specified element. */
     func remove(_ val: Int) -> Bool {
-        if list.contains(val) {
-            if let index = info[val] {
-                list.remove(at: index)
-                info.removeValue(forKey: val)
-                return true
-            }
+        if let x = info[val] {
+            let last = list[list.count - 1]
+            list[x] = last
+            info[last] = x
+            list.removeLast()
+            info.removeValue(forKey: val)
+            return true
         }
         return false
     }

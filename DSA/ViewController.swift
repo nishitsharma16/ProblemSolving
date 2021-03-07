@@ -43,8 +43,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let detail = DetailViewController(nibName: String(describing: DetailViewController.self), bundle: Bundle(for: DetailViewController.self))
-        self.navigationController?.pushViewController(detail, animated: true)
+//        let detail = DetailViewController(nibName: String(describing: DetailViewController.self), bundle: Bundle(for: DetailViewController.self))
+//        self.navigationController?.pushViewController(detail, animated: true)
         
 //        let x = "Nishit"
 //        let index = x.endIndex
@@ -174,6 +174,7 @@ class ViewController: UIViewController {
 //        
 //        self.addObserver(ob, forKeyPath: "do", options: .new, context: cxt)
 //        Problems.containsDuplicateV2([1,2,3,1])
+        
     }
     
     override class func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

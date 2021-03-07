@@ -85,6 +85,20 @@ extension Problems {
         return result
     }
     
+    func smallestRangeIIV2(_ A: [Int], _ K: Int) -> Int {
+        if A.isEmpty {
+            return -1
+        }
+        let list = A
+        var minVal = list[0]
+        var maxVal = list[0]
+        for item in list {
+            minVal = min(item, minVal)
+            maxVal = max(item, maxVal)
+        }
+        return maxVal - minVal - 2*K
+    }
+    
     static func removeDuplicateLetters(_ s: String) -> String {
         if s.isEmpty {
             return ""
@@ -523,22 +537,7 @@ extension Problems {
     }
     
     func canWinNim(_ n: Int) -> Bool {
-        var list = Array<Int>(repeating: 0, count: n + 1)
-        list[1] = 1
-        list[2] = 2
-        var left = n - 3
-        var j = 3
-        while left > 0 && j <= n  {
-            if j % 2 != 0 {
-                if left <= 3 {
-                    return true
-                }
-            }
-            list[j] = list[j - 3] + list[j - 2] + list[j - 1]
-            left -= list[j]
-            j += 1
-        }
-        return false
+        return n % 4 != 0
     }
     
     func findTheDifference(_ s: String, _ t: String) -> Character {
@@ -653,6 +652,286 @@ extension Problems {
         let max2 = robHouseHelper(nums, 1, nums.count - 1)
         return max(max1, max2)
     }
+    
+    static func lengthOfLongestSubstringV2(_ s: String) -> Int {
+        if s.isEmpty {
+            return 0
+        }
+        
+        let sVal = Array(s)
+        let n = sVal.count
+        var ans = 0
+        var i = 0
+        var j = 0
+        var set = Set<Character>()
+        
+        while i < n && j < n {
+            if !set.contains(sVal[j]) {
+                set.insert(sVal[j])
+                j += 1
+                ans = max(ans, j - i)
+            }
+            else {
+                set.remove(sVal[i])
+                i += 1
+            }
+        }
+        
+        return ans
+    }
+    
+    static func canThreePartsEqualSum(_ arr: [Int]) -> Bool {
+        let len = arr.count
+        if len < 2 {
+            return false
+        }
+        
+        var preSum = Array(repeating: 0, count: len)
+        preSum[0] = arr[0]
+        for i in 1..<len {
+            preSum[i] = arr[i] + preSum[i - 1]
+        }
+        for i in 0..<len - 2 {
+            for j in i + 2..<len {
+                if preSum[i] == preSum[j - 1] - preSum[i] &&  preSum[j - 1] - preSum[i] == preSum[len - 1] - preSum[j - 1] {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    static func canThreePartsEqualSumV2(_ arr: [Int]) -> Bool {
+        let len = arr.count
+        if len < 2 {
+            return false
+        }
+        
+        let sum = arr.reduce(0, +)
+        var partSum = 0
+        var counter = 0
+        if sum % 3 == 0 {
+            for item in arr {
+                partSum += item
+                if partSum == sum/3 {
+                    partSum = 0
+                    counter += 1
+                }
+            }
+        }
+        return counter >= 3
+    }
+    
+    static func getFinalLocalName(_ str: String) -> String {
+        if str.isEmpty {
+            return ""
+        }
+        let list = Array(str)
+        var result = ""
+        for item in list {
+            if item == "." {
+                continue
+            }
+            else if item == "+" {
+                break
+            }
+            result += String(item)
+        }
+        return result
+    }
+    
+    static func numUniqueEmails(_ emails: [String]) -> Int {
+        if emails.isEmpty {
+            return 0
+        }
+        var result = Set<String>()
+        for item in emails {
+            let val = item.split(separator: "@")
+            if val.count == 2 {
+                let x = getFinalLocalName(String(val[0]))
+                result.insert(x + "@" + val[1])
+            }
+        }
+        return result.count
+    }
+    
+    
+    func sortByBits(_ arr: [Int]) -> [Int] {
+        let result = arr.sorted { (first, second) -> Bool in
+            let l = hammingWeight(first)
+            let r = hammingWeight(second)
+            if l == r {
+                return first < second
+            }
+            return l < r
+        }
+        return result
+    }
+    
+    static func longestWPI(_ hours: [Int]) -> Int {
+        let n = hours.count
+        var dp = Array(repeating: Array(repeating: (0, 0), count: n), count: n)
+        var maxLen = Int.min
+        for i in 0..<n {
+            var item = dp[i][i]
+            if hours[i] > 8 {
+                item.0 += 1
+                maxLen = 1
+            }
+            else {
+                item.1 += 1
+            }
+            dp[i][i] = item
+        }
+        if n <= 1 {
+            return maxLen
+        }
+        
+        for l in 2...n {
+            for i in 0..<n - l + 1 {
+                let j = i + l - 1
+                let item = dp[i][j - 1]
+                if hours[j] > 8 {
+                    if item.0 >= item.1 {
+                        if maxLen < l {
+                            maxLen = l
+                        }
+                    }
+                }
+                else {
+                    if item.0 > item.1 + 1 {
+                        if maxLen < l {
+                            maxLen = l
+                        }
+                    }
+                }
+                dp[i][j] = hours[j] > 8 ? (item.0 + 1, item.1) : (item.0, item.1 + 1)
+            }
+        }
+        return maxLen
+    }
+    
+    static func twoSumSmallerHelper(_ nums: [Int], _ start: Int, _ target: Int) -> Int {
+        if nums.isEmpty {
+            return 0
+        }
+        
+        let length = nums.count
+        var counter = 0
+        var l = start
+        var r = length - 1
+        while l < r {
+            let sum = nums[l] + nums[r]
+            if target > sum {
+                counter += 1
+                l += 1
+            }
+            else {
+                r -= 1
+            }
+        }
+        return counter
+    }
+    
+    static func threeSumSmaller(_ nums: [Int], _ target: Int) -> Int {
+        if nums.isEmpty {
+            return 0
+        }
+        
+        let list = nums.sorted()
+        let length = list.count
+        var counter = 0
+        for i in 0..<length - 2 {
+            counter += twoSumSmallerHelper(list, i + 1, target - list[i])
+        }
+        
+        return counter
+    }
+    
+    static func threeSumSamllerV2(_ nums: [Int], _ target: Int) -> Int {
+        if nums.isEmpty || nums.count <= 2 {
+            return 0
+        }
+        
+        let list = nums.sorted()
+        let length = list.count
+        var counter = 0
+        
+        for i in 0..<length - 2 {
+            var l = i + 1
+            var r = length - 1
+            while l < r {
+                let sum = list[i] + list[l] + list[r]
+                if target > sum {
+                    counter += r - l
+                    l += 1
+                }
+                else {
+                    r -= 1
+                }
+            }
+        }
+        
+        return counter
+    }
+    
+    func pathSumV2Helper(_ root: TreeNode?, _ targetSum: Int, _ result: inout [[Int]], _ path: [Int]) {
+        if let r = root {
+            var pathVal = path
+            pathVal.append(r.value)
+            if root?.left == nil && root?.right == nil {
+                if targetSum - r.value == 0 {
+                    result.append(pathVal)
+                }
+                return
+            }
+            if root?.left != nil {
+                pathSumV2Helper(root?.left, targetSum - r.value, &result, pathVal)
+            }
+            if root?.right != nil {
+                pathSumV2Helper(root?.right, targetSum - r.value, &result, pathVal)
+            }
+        }
+    }
+    
+    func pathSumV2(_ root: TreeNode?, _ targetSum: Int) -> [[Int]] {
+        if root == nil {
+            return []
+        }
+        var result = [[Int]]()
+        pathSumV2Helper(root, targetSum, &result, [])
+        return result
+    }
+    
+    static func uniquePermuteHelper(_ nums: inout [Int], _ l: Int, _ r: Int, result: inout Set<[Int]>) {
+        if l == r {
+            if !result.contains(nums) {
+                result.insert(nums)
+            }
+            return
+        }
+        
+        for i in l...r {
+            nums.swapAt(i, l)
+            uniquePermuteHelper(&nums,  l + 1, r, result: &result)
+            nums.swapAt(i, l)
+        }
+    }
+    
+    static func uniquePermute(_ nums: [Int]) -> [[Int]] {
+        if nums.isEmpty {
+            return []
+        }
+        
+        var val = nums
+        var result = Set<[Int]>()
+        uniquePermuteHelper(&val, 0, nums.count - 1, result: &result)
+        return Array(result)
+    }
+    
+//    func orangesRotting(_ grid: [[Int]]) -> Int {
+//            
+//    }
 }
 
 // Segment Tree
@@ -765,3 +1044,62 @@ class UglyNumberSolution {
         return n <= 1690 ? list[n - 1] : -1
     }
 }
+
+class VersionControl {
+    func isBadVersion(_ version: Int) -> Bool{
+        return false
+    }
+}
+class VersionControlSolution : VersionControl {
+    func firstBadVersion(_ n: Int) -> Int {
+        var l = 1
+        var r = n
+        while l <= r {
+            let mid = (l + r) / 2
+            if !isBadVersion(mid - 1) && isBadVersion(mid) {
+                return mid
+            }
+            else if isBadVersion(mid) && isBadVersion(mid - 1) {
+                r = mid - 1
+            }
+            else {
+                l = mid + 1
+            }
+        }
+        return -1
+    }
+}
+
+class MyHashSet {
+
+    /** Initialize your data structure here. */
+    private var map = [Int: Int]()
+    
+    init() {
+        
+    }
+    
+    func add(_ key: Int) {
+        if !contains(key) {
+            map[key] = 1
+        }
+    }
+    
+    func remove(_ key: Int) {
+        if !contains(key) {
+            map.removeValue(forKey: key)
+        }
+    }
+    
+    /** Returns true if this set contains the specified element */
+    func contains(_ key: Int) -> Bool {
+        if let _ = map[key] {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+}
+
+
