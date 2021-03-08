@@ -929,9 +929,222 @@ extension Problems {
         return Array(result)
     }
     
-//    func orangesRotting(_ grid: [[Int]]) -> Int {
-//            
-//    }
+    static func orangesRotting(_ grid: [[Int]]) -> Int {
+        if grid.isEmpty {
+            return 0
+        }
+        var map = grid
+        let m = map.count
+        let n = map[0].count
+        var visited = Array(repeating: Array(repeating: false, count: n), count: m)
+        var freshOranges = 0
+        let queue = Queue<(x: Int, y: Int)>()
+        for i in 0..<m {
+            for j in 0..<n {
+                if map[i][j] == 1 {
+                    freshOranges += 1
+                }
+                else if map[i][j] == 2 {
+                    queue.enqueue(val: (i, j))
+                }
+            }
+        }
+        queue.enqueue(val: (-1, -1))
+        var result = 0
+        while !queue.isEmpty {
+            let item = queue.dQueue()
+            if item.x == -1 {
+                result += 1
+                if !queue.isEmpty {
+                    queue.enqueue(val: (-1, -1))
+                }
+            }
+            else {
+                let dir = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+                if visited[item.x][item.y] == false && map[item.x][item.y] == 2 {
+                    visited[item.x][item.y] = true
+                    for val in dir {
+                        let xPos = item.x + val.0
+                        let yPos = item.y + val.1
+                        if xPos >= 0 && xPos < m && yPos >= 0 && yPos < n && map[xPos][yPos] == 1 {
+                            freshOranges -= 1
+                            map[xPos][yPos] = 2
+                            queue.enqueue(val: (xPos, yPos))
+                        }
+                    }
+                }
+            }
+        }
+        return freshOranges == 0 ? result : -1
+    }
+    
+    func lengthOfLongestSubstringTwoDistinct(_ s: String) -> Int {
+        if s.isEmpty {
+            return 0
+        }
+        let sVal = Array(s)
+        let len = sVal.count
+        if len <= 2 {
+            return len
+        }
+        var maxLen = Int.min
+        var l = 0
+        var r = 0
+        var map = [Character: Int]()
+        while r < len {
+            map[sVal[r]] = r
+            r += 1
+            if map.count == 3 {
+                let minIndex = map.values.min()!
+                map.removeValue(forKey: sVal[minIndex])
+                l += 1
+            }
+            maxLen = max(maxLen, r - l)
+        }
+        return maxLen
+    }
+    
+    static func lengthOfLongestSubstringKDistinct(_ s: String, _ k: Int) -> Int {
+        if s.isEmpty {
+            return 0
+        }
+        let sVal = Array(s)
+        let len = sVal.count
+        if len <= k {
+            return len
+        }
+        var maxLen = Int.min
+        var l = 0
+        var r = 0
+        var map = [Character: Int]()
+        while r < len {
+            map[sVal[r]] = r
+            r += 1
+            if map.count == k + 1 {
+                let minIndex = map.values.min()!
+                map.removeValue(forKey: sVal[minIndex])
+                l = minIndex + 1
+            }
+            maxLen = max(maxLen, r - l)
+        }
+        return maxLen
+    }
+    
+    func swapPairs(_ head: SortedNode?) -> SortedNode? {
+        if head == nil {
+            return nil
+        }
+        
+        let dummy = SortedNode(-1)
+        dummy.next = head
+        var prev: SortedNode? = dummy
+        var curr = head
+        var next = curr?.next
+        while curr != nil && next != nil {
+            curr?.next = next?.next
+            next?.next = curr
+            prev?.next = next
+            prev = curr
+            curr = curr?.next
+            next = curr?.next
+        }
+        return dummy.next
+    }
+    
+    static func integerBreak(_ n: Int) -> Int {
+        var dp = Array(repeating: 1, count: n + 1)
+        for i in 2...n {
+            for j in 0..<i {
+                dp[i] = max(j*dp[i - j], dp[i])
+            }
+            if i < n {
+                dp[i] = max(i, dp[i])
+            }
+        }
+        return dp[n]
+    }
+    
+    static func trappingWater(_ height: [Int]) -> Int {
+        if height.isEmpty || height.count <= 1 {
+            return 0
+        }
+        let len = height.count
+        var left_Max = Array(repeating: 0, count: height.count)
+        var right_Max = Array(repeating: 0, count: height.count)
+        left_Max[0] = height[0]
+        for i in 1..<len {
+            left_Max[i] = max(left_Max[i - 1], height[i])
+        }
+        right_Max[len - 1] = height[len - 1]
+        var j = len - 2
+        while j >= 0 {
+            right_Max[j] = max(right_Max[j + 1], height[j])
+            j -= 1
+        }
+        
+        var result = 0
+        for i in 1..<len - 1 {
+            result += min(left_Max[i], right_Max[i]) - height[i]
+        }
+        return result
+    }
+    
+    func bstFromPreorder(_ preorder: [Int]) -> TreeNode? {
+        if preorder.isEmpty {
+            return nil
+        }
+        let stack = Stack<TreeNode?>()
+        let root = TreeNode(val: preorder[0])
+        var temp: TreeNode?
+        stack.push(val: root)
+        for i in 1..<preorder.count {
+            let node = TreeNode(val: preorder[i])
+            while !stack.isEmpty, let topVal = stack.top()??.value, topVal < preorder[i] {
+                temp = stack.pop()
+            }
+            if temp != nil {
+                temp?.right = node
+                stack.push(val: node)
+                temp = nil
+            }
+            else {
+                stack.top()??.left = node
+                stack.push(val: node)
+            }
+        }
+        return root
+    }
+    
+    static func jump(_ nums: [Int]) -> Int {
+        if nums.isEmpty {
+            return 0
+        }
+        var step = 0
+        var counter = 0
+        
+        while step < nums.count - 1 {
+            let next = nums[step]
+            var max = Int.min
+            var k = 0
+            for j in 1...next {
+                if step + j < nums.count {
+                    let x = nums[step + j]
+                    if max < x {
+                        max = x
+                        k = step + j
+                    }
+                }
+            }
+            if k > 0 {
+                step = k
+                counter += 1
+            }
+            else {
+                step += 1
+            }
+        }
+        return counter
+    }
 }
 
 // Segment Tree

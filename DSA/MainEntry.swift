@@ -36,7 +36,7 @@ struct MainEntry {
 //        let cls: AbstractProtocol = AbstractClass()
 //        cls.save()
         
-        Problems.uniquePermute([1,1,2])
+        Problems.jump([2,1])
     }
     
     

@@ -3417,24 +3417,26 @@ extension Problems {
     }
     
     
-    static func combinationSum2Helper(_ candidates: [Int], _ target: Int, _ index: Int, _ set: inout [Int], _ result: inout Array<Array<Int>>, _ s: inout Int) {
+    static func combinationSum2Helper(_ candidates: [Int], _ target: Int, _ index: Int, _ set: inout [Int], _ result: inout Set<Array<Int>>) {
         
-        if target < s {
+        if target < 0 {
             return
         }
         
-        if s == target && !result.contains(set) {
-            result.append(set)
+        if target == 0 {
+            if !result.contains(set) {
+                result.insert(set)
+            }
             return
         }
         
-        for i in 0..<candidates.count {
-            let x = candidates[i]
+        var j = index
+        while j < candidates.count && target - candidates[j] >= 0 {
+            let x = candidates[j]
             set.append(x)
-            s += x
-            combinationSum2Helper(candidates, target, index + 1, &set, &result, &s)
+            combinationSum2Helper(candidates, target - x, j + 1, &set, &result)
             set.removeLast()
-            s -= x
+            j += 1
         }
     }
     
@@ -3444,11 +3446,10 @@ extension Problems {
         }
         
         let vals = candidates.sorted()
-        var result = Array<Array<Int>>()
+        var result = Set<Array<Int>>()
         var temp = [Int]()
-        var s = 0
-        combinationSum2Helper(vals, target, 0, &temp, &result, &s)
-        return result
+        combinationSum2Helper(vals, target, 0, &temp, &result)
+        return Array(result)
     }
     
     func lengthOfList(_ head: SortedNode?) -> Int {
